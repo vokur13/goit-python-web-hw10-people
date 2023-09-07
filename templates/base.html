@@ -1,0 +1,41 @@
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quotes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+</head>
+<body>
+
+<header>
+    <div class="nav-left">
+        <h1>
+            <a href="{% url 'quotes:home' %}">Quotes to Scrape</a>
+        </h1>
+    </div>
+    <div class="nav-right">
+        <a href="{% url 'quotes:quote_new' %}">+ New Quote</a>
+    </div>
+
+</header>
+
+{% if user.is_authenticated %}
+    <p>Hi, {{ user.username }}</p>
+    <a href="{% url 'logout' %}">Log Out</a>
+{% else %}
+    <p>You are not logged in.</p>
+    <a href="{% url 'login' %}">Log In</a> |
+    <a href="{% url 'signup' %}">Sign Up</a>
+{% endif %}
+
+<div>
+    {% block content %}
+    {% endblock content %}
+</div>
+
+</body>
+</html>

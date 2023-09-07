@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load extract_tags %}
+
+{% block content %}
+
+    {% for quote in quote_list %}
+        <div class="quote-entry">
+            <span class="text">{{ quote.quote }}</span>
+            <div>
+             <span> by
+                <small class="author" itemprop="author">{{ quote.author }}</small>
+                 <a class="author-link" href="{% url 'quotes:author_detail' quote.author.slug %}">(about)</a>
+            </span>
+            </div>
+
+            <div>Tags:
+                {% for tag in quote.tags|tags %}
+                    <a class="tag" href="{% url 'quotes:tag_detail' tag.slug %}">{{ tag }}</a>
+                {% endfor %}
+            </div>
+
+        </div>
+    {% endfor %}
+
+{% endblock content %}
