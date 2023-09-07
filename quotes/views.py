@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView
 
@@ -24,14 +25,18 @@ class TagDetailView(DetailView):
         return context
 
 
-class QuoteCreateView(CreateView):
+class QuoteCreateView(LoginRequiredMixin, CreateView):
     model = Quote
     template_name = "quote_new.html"
     fields = ["tags", "author", "quote"]
     success_url = "/"
 
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
-class TagCreateView(CreateView):
+
+class TagCreateView(LoginRequiredMixin, CreateView):
     model = Tag
     template_name = "tag_new.html"
     fields = [
@@ -39,9 +44,17 @@ class TagCreateView(CreateView):
     ]
     success_url = "/quote/new/"
 
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
-class AuthorCreateView(CreateView):
+
+class AuthorCreateView(LoginRequiredMixin, CreateView):
     model = Author
     template_name = "author_new.html"
     fields = ["fullname", "born_date", "born_location", "biography"]
     success_url = "/quote/new/"
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
