@@ -33,9 +33,6 @@ class Tag(models.Model):
     class Meta:
         ordering = ("tag",)
 
-    # class Meta:
-    #     constraints = [models.UniqueConstraint(fields=["user", "tag"], name="tag")]
-
     def __str__(self):
         return f"{self.tag}"
 
