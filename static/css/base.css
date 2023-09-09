@@ -44,7 +44,6 @@ header h1 a {
 
 .author-link:hover,
 .author-link:focus {
-    /*color: greenyellow;*/
     text-decoration: underline;
 }
 

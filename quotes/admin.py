@@ -3,10 +3,6 @@ from django.contrib import admin
 from .models import Author, Tag, Quote
 
 
-# admin.site.register(Author)
-# admin.site.register(Tag)
-
-
 class AuthorAdmin(admin.ModelAdmin):
     list_display = ("fullname", "born_date", "born_location", "biography")
     prepopulated_fields = {"slug": ("fullname",)}
