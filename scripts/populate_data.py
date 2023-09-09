@@ -13,20 +13,8 @@ django.setup()
 
 from quotes.models import *
 
-author_data = (
-    "/Users/vokur/PycharmProjects/goit/python-web/goit-python-web-hw10/people/django_project/json_data"
-    "/authors.json"
-)
-quote_data = (
-    "/Users/vokur/PycharmProjects/goit/python-web/goit-python-web-hw10/people/django_project/json_data/quotes"
-    ".json"
-)
-
-tags = set()
-
-author_rows = {}
-tag_rows = {}
-quote_rows = {}
+author_data = "../json_data" "/authors.json"
+quote_data = "../json_data/quotes" ".json"
 
 
 def create_authors():
@@ -44,10 +32,10 @@ def create_authors():
                 biography=item["biography"],
             )
             row.save()
-            author_rows[item["fullname"]] = row
 
 
 def create_tags():
+    tags = set()
     Tag.objects.all().delete()
     with open(quote_data, "r") as fq:
         data = json.load(fq)
@@ -59,15 +47,13 @@ def create_tags():
     for tag in tags:
         row = Tag(tag=tag)
         row.save()
-        tag_rows[tag] = row
 
 
 def create_quotes():
-    # Tag.objects.all().delete()
     Quote.objects.all().delete()
 
     authors = Author.objects.all()
-    tags_dict = Tag.objects.all()
+    tags = Tag.objects.all()
 
     with open(quote_data, "r") as fq:
         data = json.load(fq)
@@ -79,12 +65,12 @@ def create_quotes():
                     row.save()
 
                     for record in quote["tags"]:
-                        for tag in tags_dict:
+                        for tag in tags:
                             if tag.tag == record:
                                 row.tags.add(tag)
 
 
 if __name__ == "__main__":
-    # create_authors()
-    # create_tags()
+    create_authors()
+    create_tags()
     create_quotes()
